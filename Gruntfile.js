@@ -85,8 +85,8 @@ module.exports = function (grunt) {
             all: {
                 src: '<%= config.source%>/sprites/*.png',
                 dest: 'assets/images/sprite.png',
-                destCss: '<%= config.source%>/less/libs/sprite.less',
-                cssFormat: 'less',
+                destCss: '<%= config.source%>/sass/libs/sprite.scss',
+                cssFormat: 'scss',
                 imgPath: '../images/sprite.png',
                 algorithm: 'top-down'
             }
@@ -107,7 +107,8 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         src: [
-                            './*.{html,php}'
+                            './*.{html,php}',
+                            '!./index.php'
                         ],
                         dest: '<%= config.dist %>/',
                         filter: 'isFile'
@@ -115,12 +116,14 @@ module.exports = function (grunt) {
 
                     {expand: true, src: ['./assets/images/**/*'], dest: '<%= config.dist %>'},
 
-                    {expand: true, src: ['./assets/fonts/**/*'], dest: '<%= config.dist %>'}
+                    {expand: true, src: ['./assets/fonts/**/*'], dest: '<%= config.dist %>'},
+
+                    {expand: true, src: ['./assets/vendor/**/*'], dest: '<%= config.dist %>'}
                 ]
             }
         },
 
-        clean: ['<%= config.dist %>', '.tmp'],
+        clean: ['<%= config.dist %>', '.sass-cache', '.tmp'],
 
         'ftp-deploy': {
 
