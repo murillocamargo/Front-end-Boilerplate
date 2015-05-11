@@ -144,10 +144,13 @@ module.exports = function (grunt) {
             options: {
                 overrides: {
                     "jquery": {
-                        "main": "script/vendor/jquery.min.js"
+                        "main": "assets/vendor/jquery.min.js"
                     }
                 },
-                exclude: ['bower_components/modernizr/modernizr.js'],
+                exclude: [
+                    'bower_components/modernizr/modernizr.js',
+                    'bower_components/bootstrap/dist/css/bootstrap.css'
+                ],
                 devDependencies: true
             }
         },
