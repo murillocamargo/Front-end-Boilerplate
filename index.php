@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Projeto-Base</title>
+    <title>Base Project</title>
     <meta charset="utf-8">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 </head>
@@ -8,8 +8,8 @@
 <div class="container">
     <nav class="span3" style="margin: 25px auto; display: block; float: none">
         <div class="page-header">
-            <h1>Projeto-Base<br>
-                <small>Páginas disponiveis</small>
+            <h1>Base files<br>
+                <small>Available pages</small>
             </h1>
         </div>
         <ul class="nav nav-tabs nav-stacked">
