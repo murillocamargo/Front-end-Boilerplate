@@ -126,12 +126,12 @@ module.exports = function (grunt) {
 
             test: {
                 auth: {
-                    host: 'ftp.estudiotouch.net',
+                    host: 'ftp.host.com',
                     port: 21,
                     authKey: 'key1'
                 },
                 src: '<%= config.dist %>',
-                dest: '/public_html/clientes/kohler/microsites/wp-content/themes/<%= config.dist %>'
+                dest: 'DESTINATION PATH ON HOST'
             }
         },
 
