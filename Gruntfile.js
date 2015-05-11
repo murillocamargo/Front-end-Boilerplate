@@ -18,7 +18,7 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= config.dist %>'
             },
-            html: 'index.html'
+            html: 'page-base.php'
         },
 
         usemin: {
@@ -57,27 +57,23 @@ module.exports = function (grunt) {
         },
 
         sass: {
-            "globbing": true,
-            options: {
-                sourceMap: true
-            },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'styles',
-                    src: ['<%= config.source%>/sass/main.scss'],
-                    dest: 'assets/css',
-                    ext: '.css'
-                }]
+                sourceMap: true,
+                options: {
+                    style: 'expanded'
+                },
+                files: {
+                    'assets/css/main.css': '<%= config.source%>/sass/main.scss'
+                }
             }
         },
 
         sass_globbing: {
             main: {
                 files: {
-                    '<%= config.source%>/_libs.scss': '<%= config.source%>/libs/**/*.scss',
-                    '<%= config.source%>/_modules.scss': '<%= config.source%>/modules/**/*.scss',
-                    '<%= config.source%>/_components.scss': '<%= config.source%>/components/**/*.scss'
+                    '<%= config.source%>/sass/_libs.scss': '<%= config.source%>/sass/libs/**/*.scss',
+                    '<%= config.source%>/sass/_modules.scss': '<%= config.source%>/sass/modules/**/*.scss',
+                    '<%= config.source%>/sass/_components.scss': '<%= config.source%>/sass/components/**/*.scss'
                 },
                 options: {
                     useSingleQuotes: false
@@ -99,8 +95,8 @@ module.exports = function (grunt) {
         concurrent: {
             dist: [
                 'sprite',
-                'newer:imagemin',
-                'newer:sass',
+                'imagemin',
+                'sass',
                 'copy:html'
             ]
         },
@@ -146,6 +142,12 @@ module.exports = function (grunt) {
                 ]
             },
             options: {
+                overrides: {
+                    "jquery": {
+                        "main": "script/vendor/jquery.min.js"
+                    }
+                },
+                exclude: ['bower_components/modernizr/modernizr.js'],
                 devDependencies: true
             }
         },
@@ -167,7 +169,7 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: ['<%= config.source%>/sass/**/*.scss'],
-                tasks: ['newer:sass'],
+                tasks: ['sass_globbing:main', 'newer:sass'],
                 options: {
                     spawn: false
                 }
@@ -201,6 +203,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'jshint:frontend',
         'clean',
+        'sass_globbing:main',
         'concurrent:dist',
         'useminPrepare',
         'concat:generated',
