@@ -20,10 +20,28 @@
 
     <!-- CONTEÚDO AQUI -->
 
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Front-end-Boilerplate</h1>
+
+            <p>Developed by Murillo Camargo (<a href="mailto:contato@murillocamargo.com.br">contato@murillocamargo.com.br</a>)</p>
+
+            <p><a class="btn btn-primary btn-lg" href="http://www.murillocamargo.com.br" target="_blank" role="button">Visit my website</a></p>
+        </div>
+    </div>
+
 </div>
 <!-- /#wrap -->
 
 <div id="footer">
+
+    <div class="container">
+        <div class="row">
+
+            <h3 class="text-center" style="color: #FFF; margin-top: 15px">Footer</h3>
+
+        </div>
+    </div>
 
 </div>
 <!-- /#footer -->
