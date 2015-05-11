@@ -175,14 +175,14 @@ module.exports = function (grunt) {
             },
             sass: {
                 files: ['<%= config.source%>/sass/**/*.scss'],
-                tasks: ['sass_globbing:main', 'newer:sass'],
+                tasks: ['newer:sass'],
                 options: {
                     spawn: false
                 }
             },
             images: {
                 files: ['<%= config.source%>/images/**/*.{png,jpg,gif}'],
-                task: ['imagemin'],
+                task: ['newer:imagemin'],
                 options: {
                     spawn: false
                 }
