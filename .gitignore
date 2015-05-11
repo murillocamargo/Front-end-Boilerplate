@@ -10,4 +10,5 @@ bower_components
 /source/sass/_components.scss
 /source/sass/_libs.scss
 /source/sass/_modules.scss
+/source/sass/libs/sprite.scss
 .sass-cache
