@@ -1,5 +1,5 @@
 # Front-end-Boilerplate
-Estrutura para início de projetos front-end
+Basic structure for front-end development
 
 ##Assets
 
