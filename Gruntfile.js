@@ -97,7 +97,8 @@ module.exports = function (grunt) {
                 'sprite',
                 'imagemin',
                 'sass',
-                'copy:html'
+                'copy:html',
+                'wiredep'
             ]
         },
 
