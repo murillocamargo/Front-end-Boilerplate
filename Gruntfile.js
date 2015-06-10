@@ -3,7 +3,10 @@
 module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
-    require('load-grunt-tasks')(grunt);
+    require('jit-grunt')(grunt, {
+        sprite: 'grunt-spritesmith',
+        useminPrepare: 'grunt-usemin'
+    });
 
     var config = {
         source: 'source',
