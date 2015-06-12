@@ -10,7 +10,8 @@ module.exports = function (grunt) {
 
     var config = {
         source: 'source',
-        dist: 'dist'
+        dist: 'dist',
+        assets: 'assets'
     };
 
     grunt.initConfig({
@@ -37,17 +38,34 @@ module.exports = function (grunt) {
         },
 
         imagemin: {
-            dynamic: {
+            jpg: {
                 options: {
-                    optimizationLevel: 3
+                    optimizationLevel: 7,
+                    progressive: true
                 },
 
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.source%>/images',
-                    src: ['**/*.{png,jpg,gif}'],
-                    dest: 'assets/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.source%>/images',
+                        src: ['**/*.jpg'],
+                        dest: '<%= config.assets%>/images'
+                    }
+                ]
+            },
+            png: {
+                options: {
+                    optimizationLevel: 7
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.source%>/images',
+                        src: ['**/*.png'],
+                        dest: '<%= config.assets%>/images'
+                    }
+                ]
             }
         },
 
@@ -66,7 +84,7 @@ module.exports = function (grunt) {
                     outputStyle: 'expanded'
                 },
                 files: {
-                    'assets/css/main.css': '<%= config.source%>/sass/main.scss'
+                    '<%= config.assets%>/css/main.css': '<%= config.source%>/sass/main.scss'
                 }
             }
         },
@@ -87,7 +105,7 @@ module.exports = function (grunt) {
         sprite: {
             all: {
                 src: '<%= config.source%>/sprites/*.png',
-                dest: 'assets/images/sprite.png',
+                dest: '<%= config.assets%>/images/sprite.png',
                 destCss: '<%= config.source%>/sass/libs/sprite.scss',
                 cssFormat: 'scss',
                 imgPath: '../images/sprite.png',
@@ -118,11 +136,11 @@ module.exports = function (grunt) {
                         filter: 'isFile'
                     },
 
-                    {expand: true, src: ['./assets/images/**/*'], dest: '<%= config.dist %>'},
+                    {expand: true, src: ['./<%= config.assets%>/images/**/*'], dest: '<%= config.dist %>'},
 
-                    {expand: true, src: ['./assets/fonts/**/*'], dest: '<%= config.dist %>'},
+                    {expand: true, src: ['./<%= config.assets%>/fonts/**/*'], dest: '<%= config.dist %>'},
 
-                    {expand: true, src: ['./assets/vendor/**/*'], dest: '<%= config.dist %>'}
+                    {expand: true, src: ['./<%= config.assets%>/vendor/**/*'], dest: '<%= config.dist %>'}
                 ]
             }
         },
@@ -151,7 +169,7 @@ module.exports = function (grunt) {
             options: {
                 overrides: {
                     "jquery": {
-                        "main": "assets/vendor/jquery.min.js"
+                        "main": "<%= config.assets%>/vendor/jquery.min.js"
                     }
                 },
                 exclude: [
@@ -186,7 +204,7 @@ module.exports = function (grunt) {
             },
             images: {
                 files: ['<%= config.source%>/images/**/*.{png,jpg,gif}'],
-                task: ['newer:imagemin'],
+                tasks: ['newer:imagemin'],
                 options: {
                     spawn: false
                 }
