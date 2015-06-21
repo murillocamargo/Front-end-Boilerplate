@@ -1,0 +1,52 @@
+@function em($px, $base: $font-size-base) {
+    @return ($px / $base) * 1em;
+}
+
+@mixin border-radius($radius: 5px) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+@mixin bgi($file, $repeat: no-repeat) {
+    background-image: url('../images/#{$file}');
+    background-repeat: $repeat;
+}
+
+@mixin list-reset {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@mixin list-float {
+    @include clearfix;
+    li {
+        display: inline-block;
+    }
+}
+
+@mixin list-fixed-item-width {
+    //aplicar este estilo na NAV
+    width: 100%;
+    ul {
+        display: flex;
+        flex-direction: row;
+        li {
+            flex-grow: 1;
+            text-align: center;
+            a {
+                display: block;
+            }
+        }
+    }
+}
