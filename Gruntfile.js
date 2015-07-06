@@ -106,7 +106,7 @@ module.exports = function (grunt) {
             all: {
                 src: '<%= config.source%>/sprites/*.png',
                 dest: '<%= config.assets%>/images/sprite.png',
-                destCss: '<%= config.source%>/sass/libs/sprite.scss',
+                destCss: '<%= config.source%>/sass/libs/_sprite.scss',
                 cssFormat: 'scss',
                 imgPath: '../images/sprite.png',
                 algorithm: 'top-down'
