@@ -18,6 +18,22 @@ module.exports = function (grunt) {
 
         config: config,
 
+        newer: {
+            options: {
+                override: function (details, include) {
+                    include(true);
+                }
+            }
+        },
+
+        clean: [
+            '<%= config.dist %>',
+            '<%= config.assets %>/css',
+            '<%= config.assets %>/images',
+            '.sass-cache',
+            '.tmp'
+        ],
+
         useminPrepare: {
             options: {
                 dest: '<%= config.dist %>'
@@ -27,46 +43,6 @@ module.exports = function (grunt) {
 
         usemin: {
             html: ['<%= config.dist %>/*.{html,php}']
-        },
-
-        newer: {
-            options: {
-                override: function (details, include) {
-                    include(true);
-                }
-            }
-        },
-
-        imagemin: {
-            jpg: {
-                options: {
-                    optimizationLevel: 7,
-                    progressive: true
-                },
-
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.source%>/images',
-                        src: ['**/*.jpg'],
-                        dest: '<%= config.assets%>/images'
-                    }
-                ]
-            },
-            png: {
-                options: {
-                    optimizationLevel: 7
-                },
-
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= config.source%>/images',
-                        src: ['**/*.png'],
-                        dest: '<%= config.assets%>/images'
-                    }
-                ]
-            }
         },
 
         jshint: {
@@ -94,11 +70,32 @@ module.exports = function (grunt) {
                 files: {
                     '<%= config.source%>/sass/_libs.scss': '<%= config.source%>/sass/libs/**/*.scss',
                     '<%= config.source%>/sass/_modules.scss': '<%= config.source%>/sass/modules/**/*.scss',
-                    '<%= config.source%>/sass/_components.scss': '<%= config.source%>/sass/components/**/*.scss'
+                    '<%= config.source%>/sass/_components.scss': '<%= config.source%>/sass/components/**/*.scss',
+                    '<%= config.source%>/sass/_views.scss': '<%= config.source%>/sass/views/**/*.scss'
                 },
                 options: {
                     useSingleQuotes: false
                 }
+            }
+        },
+
+        wiredep: {
+            task: {
+                src: [
+                    './**/*.php'
+                ]
+            },
+            options: {
+                overrides: {
+                    "jquery": {
+                        "main": '<%= config.assets%>/vendor/jquery.min.js'
+                    }
+                },
+                exclude: [
+                    'bower_components/modernizr/modernizr.js',
+                    'bower_components/bootstrap/dist/css/bootstrap.css'
+                ],
+                devDependencies: true
             }
         },
 
@@ -113,18 +110,88 @@ module.exports = function (grunt) {
             }
         },
 
+        imagemin: {
+
+            jpgDev: {
+                options: {
+                    optimizationLevel: 1,
+                    progressive: true
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.source%>/images',
+                        src: ['**/*.jpg'],
+                        dest: '<%= config.assets%>/images'
+                    }
+                ]
+            },
+            pngDev: {
+                options: {
+                    optimizationLevel: 1
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.source%>/images',
+                        src: ['**/*.png'],
+                        dest: '<%= config.assets%>/images'
+                    }
+                ]
+            },
+
+            jpgDist: {
+                options: {
+                    optimizationLevel: 7,
+                    progressive: true
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.source%>/images',
+                        src: ['**/*.jpg'],
+                        dest: '<%= config.assets%>/images'
+                    }
+                ]
+            },
+            pngDist: {
+                options: {
+                    optimizationLevel: 7
+                },
+
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.source%>/images',
+                        src: ['**/*.png'],
+                        dest: '<%= config.assets%>/images'
+                    }
+                ]
+            }
+        },
+
         concurrent: {
-            dist: [
-                'sprite',
-                'imagemin',
-                'sass',
-                'copy:html',
+            first: [
+                'sass_globbing:main',
                 'wiredep'
+            ],
+            imagesDev: [
+                'sprite',
+                'imagemin:jpgDev',
+                'imagemin:pngDev'
+            ],
+            imagesDist: [
+                'sprite',
+                'imagemin:jpgDist',
+                'imagemin:pngDist'
             ]
         },
 
         copy: {
-            html: {
+            dist: {
                 files: [
                     {
                         expand: true,
@@ -145,8 +212,6 @@ module.exports = function (grunt) {
             }
         },
 
-        clean: ['<%= config.dist %>', '.sass-cache', '.tmp'],
-
         'ftp-deploy': {
 
             test: {
@@ -157,26 +222,6 @@ module.exports = function (grunt) {
                 },
                 src: '<%= config.dist %>',
                 dest: 'DESTINATION PATH ON HOST'
-            }
-        },
-
-        wiredep: {
-            task: {
-                src: [
-                    './**/*.php'
-                ]
-            },
-            options: {
-                overrides: {
-                    "jquery": {
-                        "main": "<%= config.assets%>/vendor/jquery.min.js"
-                    }
-                },
-                exclude: [
-                    'bower_components/modernizr/modernizr.js',
-                    'bower_components/bootstrap/dist/css/bootstrap.css'
-                ],
-                devDependencies: true
             }
         },
 
@@ -204,7 +249,7 @@ module.exports = function (grunt) {
             },
             images: {
                 files: ['<%= config.source%>/images/**/*.{png,jpg,gif}'],
-                tasks: ['newer:imagemin'],
+                tasks: ['newer:imagemin:jpgDev', 'newer:imagemin:pngDev'],
                 options: {
                     spawn: false
                 }
@@ -226,18 +271,43 @@ module.exports = function (grunt) {
         }
     });
 
-    // Compila e minifica os arquivos
+    // Compilation and minification of files + Creates Dist folder (Development Version)
 
     grunt.registerTask('build', [
-        'jshint:frontend',
         'clean',
-        'sass_globbing:main',
-        'concurrent:dist',
+        'jshint:frontend',
+        'concurrent:first',
+        'concurrent:imagesDev',
+        'sass',
+        'copy:dist',
         'useminPrepare',
         'concat:generated',
         'cssmin:generated',
         'uglify:generated',
         'usemin'
+    ]);
+
+    // Compilation and minification of files + Creates Dist folder (Production Version)
+
+    grunt.registerTask('build:dist', [
+        'clean',
+        'jshint:frontend',
+        'concurrent:first',
+        'concurrent:imagesDist',
+        'sass',
+        'copy:dist',
+        'useminPrepare',
+        'concat:generated',
+        'cssmin:generated',
+        'uglify:generated',
+        'usemin'
+    ]);
+
+    // Deploy Dist folder to server (Need to configure FTP Deploy task)
+
+    grunt.registerTask('deploy', [
+        'build:dist',
+        'ftp-deploy'
     ]);
 
     grunt.registerTask('default', [
