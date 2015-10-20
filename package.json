@@ -28,6 +28,6 @@
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^2.0.0",
     "jit-grunt": "^0.9.1",
-    "time-grunt": "^1.2.1"
+    "time-grunt": "^1.2.2"
   }
 }
