@@ -122,7 +122,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%= config.source%>/images',
-                        src: ['**/*.jpg'],
+                        src: ['**/*.{jpg,jpeg}'],
                         dest: '<%= config.assets%>/images'
                     }
                 ]
@@ -152,7 +152,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '<%= config.source%>/images',
-                        src: ['**/*.jpg'],
+                        src: ['**/*.{jpg,jpeg}'],
                         dest: '<%= config.assets%>/images'
                     }
                 ]
