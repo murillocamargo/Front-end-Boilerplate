@@ -82,7 +82,7 @@ module.exports = function (grunt) {
         wiredep: {
             task: {
                 src: [
-                    './**/*.php'
+                    './**/*.{html,php}'
                 ]
             },
             options: {
