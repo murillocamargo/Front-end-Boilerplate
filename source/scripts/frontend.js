@@ -1,17 +1,14 @@
-app = {
+(function ($) {
 
-    init: function () {
-        app.actionName.init();
-    },
+    var app = function () {
+        this.body = $('body');
 
-    actionName: {
-        init: function () {
-            // Do something
-        }
-    }
+        var functionName = function () {
+            console.log('Worked!');
+        };
 
-};
+        functionName();
+    };
 
-$(function () {
-    app.init();
-});
+    new app();
+})(jQuery);
