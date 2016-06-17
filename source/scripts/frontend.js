@@ -3,12 +3,19 @@
     var app = function () {
         this.body = $('body');
 
+        //
         var functionName = function () {
             console.log('Worked!');
         };
 
-        functionName();
+        var run = function () {
+            functionName();
+        };
+
+        run();
     };
 
-    new app();
+    $(function () {
+        app();
+    });
 })(jQuery);
