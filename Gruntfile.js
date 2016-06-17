@@ -233,6 +233,24 @@ module.exports = function (grunt) {
             }
         },
 
+        //In case of SFTP deploy
+        // You will need to replace this task on grunt:deploy task > Line 326
+        'sftp-deploy': {
+
+            dist: {
+                auth: {
+                    host: 'ftp.host.com',
+                    port: 22,
+                    authKey: 'key2'
+                },
+                src: '<%= config.dist %>',
+                dest: 'DESTINATION PATH ON HOST',
+                serverSep: '/',
+                concurrency: 4,
+                progress: true
+            }
+        },
+
         watch: {
             options: {
                 livereload: true
