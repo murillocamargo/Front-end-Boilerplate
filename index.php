@@ -1,6 +1,9 @@
 <html>
 <head>
     <title>Base Project</title>
+
+    <!-- SIMPLE TEMPLATE FOR PROJECT FILES VISUALIZATION -->
+
     <meta charset="utf-8">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 </head>

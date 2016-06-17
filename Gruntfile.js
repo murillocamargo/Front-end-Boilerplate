@@ -4,10 +4,13 @@ module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
     require('jit-grunt')(grunt, {
+        //Don't change this or it will break Grunt process
         sprite: 'grunt-spritesmith',
         useminPrepare: 'grunt-usemin'
     });
 
+    //Folder configuration paths
+    //If you need to change the name of folder, change theses lines
     var config = {
         source: 'source',
         dist: 'dist',
@@ -38,6 +41,8 @@ module.exports = function (grunt) {
             options: {
                 dest: '<%= config.dist %>'
             },
+            //Don't change this file or it will break Grunt process
+            //If you want to delete this file, you will need to add another HTML with comment tags for the build process
             html: 'page-base.php'
         },
 
@@ -68,6 +73,7 @@ module.exports = function (grunt) {
         sass_globbing: {
             main: {
                 files: {
+                    //Globbing all the SCSS files -- Just create new files inside these folders and Grunt do the hard work :)
                     '<%= config.source%>/sass/_libs.scss': '<%= config.source%>/sass/libs/**/*.scss',
                     '<%= config.source%>/sass/_modules.scss': '<%= config.source%>/sass/modules/**/*.scss',
                     '<%= config.source%>/sass/_components.scss': '<%= config.source%>/sass/components/**/*.scss',
@@ -79,6 +85,8 @@ module.exports = function (grunt) {
             }
         },
 
+        //Bower dependencies HTML auto injection
+        //If the bower dependency does not have the "main" reference on it' bower.json, the depedency files need to be added manually
         wiredep: {
             task: {
                 src: [
@@ -272,7 +280,6 @@ module.exports = function (grunt) {
     });
 
     // Compilation and minification of files + Creates Dist folder (Development Version)
-
     grunt.registerTask('build', [
         'clean',
         'jshint:frontend',
@@ -288,7 +295,6 @@ module.exports = function (grunt) {
     ]);
 
     // Compilation and minification of files + Creates Dist folder (Production Version)
-
     grunt.registerTask('build:dist', [
         'clean',
         'jshint:frontend',
@@ -304,12 +310,12 @@ module.exports = function (grunt) {
     ]);
 
     // Deploy Dist folder to server (Need to configure FTP Deploy task)
-
     grunt.registerTask('deploy', [
         'build:dist',
         'ftp-deploy'
     ]);
 
+    //Watch task for SCSS compilation, JSHINT, sprite generation, image minification, Wiredep dependencies injection and livereload on project
     grunt.registerTask('default', [
         'watch'
     ]);

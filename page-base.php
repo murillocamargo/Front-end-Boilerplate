@@ -7,6 +7,9 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- THIS PAGE CANNOT BE DELETED -->
+    <!-- THIS COMMENT TAG IS NEEDED FOR GRUNT BUILD PROCESS -->
+
     <!-- build:css assets/css/frontend.min.css -->
     <!-- bower:css -->
     <!-- endbower -->
@@ -48,6 +51,9 @@
 
 <script src="assets/vendor/jquery.min.js"></script>
 <script src="assets/vendor/jquery-migrate.min.js"></script>
+
+<!-- THIS COMMENT TAG IS NEEDED FOR GRUNT BUILD PROCESS -->
+
 <!-- build:js assets/script/frontend.min.js -->
 <!-- bower:js -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
