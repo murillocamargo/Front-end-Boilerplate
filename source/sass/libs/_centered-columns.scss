@@ -1,79 +1,87 @@
 /* centered columns styles */
 .row-centered {
-    text-align:center;
+    text-align: center;
 }
+
 .col-centered {
-    display:inline-block;
-    float:none;
+    display: inline-block;
+    float: none;
     /* reset the text-align */
-    text-align:left;
+    text-align: left;
     /* inline-block space fix */
-    margin-right:-4px;
+    margin-right: -4px;
 }
 
 /* vertical alignment styles */
 .col-top {
-    vertical-align:top;
+    vertical-align: top;
 }
+
 .col-middle {
-    vertical-align:middle;
+    vertical-align: middle;
 }
+
 .col-bottom {
-    vertical-align:bottom;
+    vertical-align: bottom;
 }
 
 /* columns of same height styles */
 .container-xs-height {
-    display:table;
-    padding-left:0px;
-    padding-right:0px;
+    display: table;
+    padding-left: 0px;
+    padding-right: 0px;
 }
+
 .row-xs-height {
-    display:table-row;
+    display: table-row;
 }
+
 .col-xs-height {
-    display:table-cell;
-    float:none;
+    display: table-cell;
+    float: none;
 }
+
 @media (min-width: 768px) {
     .container-sm-height {
-        display:table;
-        padding-left:0px;
-        padding-right:0px;
+        display: table;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .row-sm-height {
-        display:table-row;
+        display: table-row;
     }
     .col-sm-height {
-        display:table-cell;
-        float:none;
+        display: table-cell;
+        float: none;
     }
 }
+
 @media (min-width: 992px) {
     .container-md-height {
-        display:table;
-        padding-left:0px;
-        padding-right:0px;
+        display: table;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .row-md-height {
-        display:table-row;
+        display: table-row;
     }
     .col-md-height {
-        display:table-cell;
-        float:none;
+        display: table-cell;
+        float: none;
     }
 }
+
 @media (min-width: 1200px) {
     .container-lg-height {
-        display:table;
-        padding-left:0px;
-        padding-right:0px;
+        display: table;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .row-lg-height {
-        display:table-row;
+        display: table-row;
     }
     .col-lg-height {
-        display:table-cell;
-        float:none;
+        display: table-cell;
+        float: none;
     }
 }
