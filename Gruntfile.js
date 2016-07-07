@@ -68,7 +68,7 @@ module.exports = function (grunt) {
         sass_globbing: {
             main: {
                 files: {
-                    //Globbing all the SCSS files -- Just create new files inside these folders and Grunt do the hard work :)
+                    //Globbing all the SCSS files -- Just create new files inside these folders and let Grunt do the hard work :)
                     '<%= config.source%>/sass/_libs.scss': '<%= config.source%>/sass/libs/**/*.scss',
                     '<%= config.source%>/sass/_modules.scss': '<%= config.source%>/sass/modules/**/*.scss',
                     '<%= config.source%>/sass/_components.scss': '<%= config.source%>/sass/components/**/*.scss',
@@ -199,8 +199,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         src: [
-                            './*.{html,php}',
-                            '!./index.php'
+                            './*.{html,php}'
                         ],
                         dest: '<%= config.dist %>/',
                         filter: 'isFile'
@@ -212,16 +211,37 @@ module.exports = function (grunt) {
 
                     {expand: true, src: ['./<%= config.assets%>/vendor/**/*'], dest: '<%= config.dist %>'}
                 ]
+            },
+
+            dev: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['<%= config.dist %>/**/*'],
+                        dest: '<%= config.wpThemesPath %>',
+                        filter: 'isFile'
+                    }
+                ]
             }
         },
 
         'ftp-deploy': {
 
-            test: {
+            dev: {
                 auth: {
                     host: 'ftp.host.com',
                     port: 21,
-                    authKey: 'key1'
+                    authKey: 'dev'
+                },
+                src: '<%= config.dist %>',
+                dest: 'DESTINATION PATH ON HOST'
+            },
+
+            prod: {
+                auth: {
+                    host: 'ftp.host.com',
+                    port: 21,
+                    authKey: 'prod'
                 },
                 src: '<%= config.dist %>',
                 dest: 'DESTINATION PATH ON HOST'
@@ -232,11 +252,24 @@ module.exports = function (grunt) {
         // You will need to replace this task on grunt:deploy task > Line 326
         'sftp-deploy': {
 
-            dist: {
+            dev: {
                 auth: {
                     host: 'ftp.host.com',
                     port: 22,
-                    authKey: 'key2'
+                    authKey: 'dev'
+                },
+                src: '<%= config.dist %>',
+                dest: 'DESTINATION PATH ON HOST',
+                serverSep: '/',
+                concurrency: 4,
+                progress: true
+            },
+
+            prod: {
+                auth: {
+                    host: 'ftp.host.com',
+                    port: 22,
+                    authKey: 'prod'
                 },
                 src: '<%= config.dist %>',
                 dest: 'DESTINATION PATH ON HOST',
@@ -322,10 +355,22 @@ module.exports = function (grunt) {
         'usemin'
     ]);
 
-    // Deploy Dist folder to server (Need to configure FTP Deploy task)
-    grunt.registerTask('deploy', [
+    // Task that sends the dist folder to WP config path
+    grunt.registerTask('build:dev', [
+        'build',
+        'copy:dev'
+    ]);
+
+    // Deploy Dist folder to development server (Need to configure FTP Deploy task)
+    grunt.registerTask('deploy:dev', [
+        'build',
+        'ftp-deploy:dev'
+    ]);
+
+    // Deploy Dist folder to production server (Need to configure FTP Deploy task)
+    grunt.registerTask('deploy:prod', [
         'build:dist',
-        'ftp-deploy'
+        'ftp-deploy:prod'
     ]);
 
     //Watch task for SCSS compilation, JSHINT, sprite generation, image minification, Wiredep dependencies injection and livereload on project
