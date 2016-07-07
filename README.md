@@ -7,9 +7,9 @@ Basic structure for front-end development
 - Bootstrap v3.3.6 (SASS version)
 
 ###Vendors
-- Jquery v2.1.4
-- Jquery Migrate v1.2.1
-- Modernizr v2.8.3
+- Jquery v3.0.0
+- Jquery Migrate v3.0.0
+- Modernizr v3.3.1
 
 ###Managers
 - Grunt
