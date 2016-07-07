@@ -14,3 +14,5 @@ bower_components
 /source/sass/libs/sprite.scss
 /source/sass/libs/_sprite.scss
 .sass-cache
+.ftppass
+Gruntconfig.js

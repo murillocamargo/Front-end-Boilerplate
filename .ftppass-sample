@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "username": "Check on manager",
+    "password": "Check on manager"
+  },
+  "prod": {
+    "username": "Check on manager",
+    "password": "Check on manager"
+  }
+}
