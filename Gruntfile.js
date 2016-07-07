@@ -9,13 +9,8 @@ module.exports = function (grunt) {
         useminPrepare: 'grunt-usemin'
     });
 
-    //Folder configuration paths
-    //If you need to change the name of folder, change theses lines
-    var config = {
-        source: 'source',
-        dist: 'dist',
-        assets: 'assets'
-    };
+    //Edit the file Gruntconfig-sampe.js for
+    var config = require('./Gruntconfig.js');
 
     grunt.initConfig({
 
