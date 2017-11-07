@@ -176,6 +176,21 @@ module.exports = function (grunt) {
             }
         },
 
+        svgmin: {
+            options: {
+                plugins: [
+                    {removeViewBox: false},
+                    {removeUselessStrokeAndFill: false}
+                ]
+            },
+            dist: {
+                expand: true,
+                cwd: '<%= config.source%>/images/svg',
+                src: ['*.svg'],
+                dest: '<%= config.assets%>/images/svg'
+            }
+        },
+
         concurrent: {
             first: [
                 'sass_globbing:main',
@@ -184,12 +199,14 @@ module.exports = function (grunt) {
             imagesDev: [
                 'sprite',
                 'imagemin:jpgDev',
-                'imagemin:pngDev'
+                'imagemin:pngDev',
+                'svgmin'
             ],
             imagesDist: [
                 'sprite',
                 'imagemin:jpgDist',
-                'imagemin:pngDist'
+                'imagemin:pngDist',
+                'svgmin'
             ]
         },
 
@@ -302,8 +319,8 @@ module.exports = function (grunt) {
                 }
             },
             images: {
-                files: ['<%= config.source%>/images/**/*.{png,jpg,gif}'],
-                tasks: ['newer:imagemin:jpgDev', 'newer:imagemin:pngDev'],
+                files: ['<%= config.source%>/images/**/*.{png,jpg,gif,svg}'],
+                tasks: ['newer:imagemin:jpgDev', 'newer:imagemin:pngDev', 'newer:svgmin'],
                 options: {
                     spawn: false
                 }
