@@ -22,6 +22,7 @@ Basic structure for front-end development
 - Copy
 - Cssmin
 - Imagemin
+- SVGmin
 - JShint
 - Sass (grunt-sass with libsass)
 - Sass globbing
