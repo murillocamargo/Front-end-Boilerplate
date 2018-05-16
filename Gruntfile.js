@@ -392,6 +392,7 @@ module.exports = function (grunt) {
 
     //Watch task for SCSS compilation, JSHINT, sprite generation, image minification, Wiredep dependencies injection and livereload on project
     grunt.registerTask('default', [
+        'build',
         'watch'
     ]);
 
