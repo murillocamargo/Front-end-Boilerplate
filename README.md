@@ -4,7 +4,7 @@ Basic structure for front-end development
 ##Assets
 
 ###Framework
-- Bootstrap v3.3.7 (SASS version)
+- Bootstrap v4.2.1 (SASS version)
 
 ###Vendors
 - Jquery v3.3.1
@@ -43,7 +43,7 @@ Basic structure for front-end development
 ```sh
   $ grunt build
   ```
-3. Watch files
+3. Build && Watch files
 
 ```sh
   $ grunt
