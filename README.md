@@ -4,7 +4,7 @@ Basic structure for front-end development
 ## Assets
 
 ### Framework
-- Bootstrap v4.2.1 (SASS version)
+- Bootstrap v4.2.1
 
 ### Vendors
 - Jquery v3.3.1
