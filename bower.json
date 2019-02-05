@@ -15,8 +15,6 @@
     "sass",
     "bootstrap"
   ],
-  "dependencies": {
-    "bootstrap": "~3.3.7"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }
