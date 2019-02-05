@@ -1,21 +1,21 @@
 # Front-end-Boilerplate
 Basic structure for front-end development
 
-##Assets
+## Assets
 
-###Framework
+### Framework
 - Bootstrap v4.2.1 (SASS version)
 
-###Vendors
+### Vendors
 - Jquery v3.3.1
 - Jquery Migrate v3.0.1
 - Modernizr v3.6.0
 
-###Managers
+### Managers
 - Grunt
 - Bower
 
-####Grunt plugins
+#### Grunt plugins
 - Concurrent
 - Clean
 - Concat
@@ -31,7 +31,7 @@ Basic structure for front-end development
 - Spritesmith
 - Usemin + Wiredep
 
-##Usage
+## Usage
 
 1. Install dependencies, packages and initial structure
 
