@@ -56,7 +56,7 @@
 
 <!-- build:js assets/script/frontend.min.js -->
 <!-- bower:js -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="assets/vendor/bootstrap.js"></script>
 <!-- endbower -->
 <script src="source/scripts/frontend.js"></script>
 <!-- endbuild -->
