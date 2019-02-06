@@ -11,24 +11,23 @@
   "license": "MIT",
   "homepage": "https://github.com/murillocamargo/Front-end-Boilerplate",
   "devDependencies": {
-    "grunt-concurrent": "^2.0.3",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-concat": "^1.0.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^2.2.1",
-    "grunt-contrib-imagemin": "^2.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-uglify": "^3.1.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-ftp-deploy": "^0.1.10",
-    "grunt-newer": "^1.1.1",
-    "grunt-sass": "^2.0.0",
-    "grunt-sass-globbing": "^1.4.0",
-    "grunt-spritesmith": "^6.3.0",
-    "grunt-svgmin": "^4.0.0",
-    "grunt-usemin": "^3.1.1",
-    "grunt-wiredep": "^3.0.1",
-    "jit-grunt": "^0.10.0",
-    "time-grunt": "^1.2.2"
+    "autoprefixer": "^9.4.7",
+    "cssnano": "^4.1.8",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-copy": "^4.0.1",
+    "gulp-eslint": "^5.0.0",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-newer": "^1.4.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-glob": "^1.0.9",
+    "gulp-uglify": "^3.0.1",
+    "node-sass": "^4.11.0"
+  },
+  "dependencies": {
+    "del": "^3.0.0"
   }
 }
