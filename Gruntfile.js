@@ -2,10 +2,10 @@
 
 module.exports = function (grunt) {
 
+    const sass = require('node-sass');
     require('time-grunt')(grunt);
     require('jit-grunt')(grunt, {
         //Don't change this or it will break Grunt process
-        sprite: 'grunt-spritesmith',
         useminPrepare: 'grunt-usemin'
     });
 
@@ -56,12 +56,27 @@ module.exports = function (grunt) {
         sass: {
             dist: {
                 options: {
+                    implementation: sass,
                     sourceMap: true,
                     outputStyle: 'expanded'
                 },
                 files: {
                     '<%= config.assets%>/css/main.css': '<%= config.source%>/sass/main.scss'
                 }
+            }
+        },
+
+        postcss: {
+            options: {
+                map: true,
+
+                processors: [
+                    require('pixrem')(),
+                    require('autoprefixer')({browsers: 'last 2 versions'}),
+                ]
+            },
+            dist: {
+                src: '<%= config.assets%>/css/main.css'
             }
         },
 
@@ -99,17 +114,6 @@ module.exports = function (grunt) {
                     'bower_components/bootstrap/dist/css/bootstrap.css'
                 ],
                 devDependencies: true
-            }
-        },
-
-        sprite: {
-            all: {
-                src: '<%= config.source%>/sprites/*.png',
-                dest: '<%= config.assets%>/images/sprite.png',
-                destCss: '<%= config.source%>/sass/libs/_sprite.scss',
-                cssFormat: 'scss',
-                imgPath: '../images/sprite.png',
-                algorithm: 'top-down'
             }
         },
 
@@ -197,13 +201,11 @@ module.exports = function (grunt) {
                 'wiredep'
             ],
             imagesDev: [
-                'sprite',
                 'imagemin:jpgDev',
                 'imagemin:pngDev',
                 'svgmin'
             ],
             imagesDist: [
-                'sprite',
                 'imagemin:jpgDist',
                 'imagemin:pngDist',
                 'svgmin'
@@ -311,7 +313,7 @@ module.exports = function (grunt) {
                     spawn: false
                 }
             },
-            sass: {
+            css: {
                 files: ['<%= config.source%>/sass/**/*.scss'],
                 tasks: ['newer:sass'],
                 options: {
@@ -349,6 +351,7 @@ module.exports = function (grunt) {
         'concurrent:first',
         'concurrent:imagesDev',
         'sass',
+        'postcss',
         'copy:dist',
         'useminPrepare',
         'concat:generated',
@@ -364,6 +367,7 @@ module.exports = function (grunt) {
         'concurrent:first',
         'concurrent:imagesDist',
         'sass',
+        'postcss',
         'copy:dist',
         'useminPrepare',
         'concat:generated',
