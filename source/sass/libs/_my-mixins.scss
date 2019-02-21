@@ -1,5 +1,5 @@
-@function em($px, $base: $font-size-base) {
-    @return ($px / $base) * 1em;
+@function em($pixels, $context: $browser-context) {
+    @return #{$pixels/$context}em;
 }
 
 @mixin border-radius($radius: 5px) {
@@ -35,18 +35,22 @@
     }
 }
 
-@mixin list-fixed-item-width {
-    //aplicar este estilo na NAV
-    width: 100%;
-    ul {
-        display: flex;
-        flex-direction: row;
-        li {
-            flex-grow: 1;
-            text-align: center;
-            a {
-                display: block;
-            }
-        }
+@mixin square($size) {
+    width: $size;
+    height: $size;
+}
+
+@mixin placeholder {
+    ::-webkit-input-placeholder {
+        @content
+    }
+    :-moz-placeholder {
+        @content
+    }
+    ::-moz-placeholder {
+        @content
+    }
+    :-ms-input-placeholder {
+        @content
     }
 }
