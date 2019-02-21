@@ -28,7 +28,7 @@ module.exports = function (grunt) {
             '<%= config.dist %>',
             '<%= config.assets %>/css',
             '<%= config.assets %>/images',
-            '.sass-cache',
+            '.scss-cache',
             '.tmp'
         ],
 
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
                     outputStyle: 'expanded'
                 },
                 files: {
-                    '<%= config.assets%>/css/main.css': '<%= config.source%>/sass/main.scss'
+                    '<%= config.assets%>/css/main.css': '<%= config.source%>/scss/main.scss'
                 }
             }
         },
@@ -69,10 +69,10 @@ module.exports = function (grunt) {
             main: {
                 files: {
                     //Globbing all the SCSS files -- Just create new files inside these folders and let Grunt do the hard work :)
-                    '<%= config.source%>/sass/_libs.scss': '<%= config.source%>/sass/libs/**/*.scss',
-                    '<%= config.source%>/sass/_modules.scss': '<%= config.source%>/sass/modules/**/*.scss',
-                    '<%= config.source%>/sass/_components.scss': '<%= config.source%>/sass/components/**/*.scss',
-                    '<%= config.source%>/sass/_views.scss': '<%= config.source%>/sass/views/**/*.scss'
+                    '<%= config.source%>/sass/_libs.scss': '<%= config.source%>/scss/libs/**/*.scss',
+                    '<%= config.source%>/sass/_modules.scss': '<%= config.source%>/scss/modules/**/*.scss',
+                    '<%= config.source%>/sass/_components.scss': '<%= config.source%>/scss/components/**/*.scss',
+                    '<%= config.source%>/sass/_views.scss': '<%= config.source%>/scss/views/**/*.scss'
                 },
                 options: {
                     useSingleQuotes: false
@@ -106,7 +106,7 @@ module.exports = function (grunt) {
             all: {
                 src: '<%= config.source%>/sprites/*.png',
                 dest: '<%= config.assets%>/images/sprite.png',
-                destCss: '<%= config.source%>/sass/libs/_sprite.scss',
+                destCss: '<%= config.source%>/scss/libs/_sprite.scss',
                 cssFormat: 'scss',
                 imgPath: '../images/sprite.png',
                 algorithm: 'top-down'
@@ -312,8 +312,8 @@ module.exports = function (grunt) {
                 }
             },
             sass: {
-                files: ['<%= config.source%>/sass/**/*.scss'],
-                tasks: ['newer:sass'],
+                files: ['<%= config.source%>/scss/**/*.scss'],
+                tasks: ['newer:scss'],
                 options: {
                     spawn: false
                 }

@@ -6,13 +6,33 @@ const browsersync = require("browser-sync").create();
 const cssnano = require("cssnano");
 const del = require("del");
 const eslint = require("gulp-eslint");
-const gulp = require("gulp");
 const imagemin = require("gulp-imagemin");
 const newer = require("gulp-newer");
 const plumber = require("gulp-plumber");
 const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
+const sassGlob = require('gulp-sass-glob');
+const gulp = require("gulp");
+
+// Clean assets
+function clean() {
+    return del(["./assets/"]);
+}
+
+// CSS task
+function css() {
+
+    return gulp
+        .src("./source/scss/main.scss")
+        .pipe(plumber())
+        .pipe(sassGlob())
+        .pipe(sass({outputStyle: "expanded"}))
+        .pipe(gulp.dest("./assets/css/"))
+        .pipe(rename({suffix: ".min"}))
+        .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(gulp.dest("./assets/css/"));
+}
 
 // BrowserSync
 function browserSync(done) {
@@ -59,19 +79,6 @@ function images() {
         .pipe(gulp.dest("./_site/assets/img"));
 }
 
-// CSS task
-function css() {
-    return gulp
-        .src("./assets/scss/**/*.scss")
-        .pipe(plumber())
-        .pipe(sass({outputStyle: "expanded"}))
-        .pipe(gulp.dest("./_site/assets/css/"))
-        .pipe(rename({suffix: ".min"}))
-        .pipe(postcss([autoprefixer(), cssnano()]))
-        .pipe(gulp.dest("./_site/assets/css/"))
-        .pipe(browsersync.stream());
-}
-
 // Lint scripts
 function scriptsLint() {
     return gulp
@@ -85,7 +92,8 @@ function scriptsLint() {
 // Watch files
 function watchFiles() {
     gulp.watch("./assets/scss/**/*", css);
-    gulp.watch("./assets/js/**/*", gulp.series(scriptsLint, scripts));
+    // gulp.watch("./assets/js/**/*", gulp.series(scriptsLint, scripts));
+    gulp.watch("./assets/js/**/*", gulp.series(scriptsLint));
     gulp.watch(
         [
             "./_includes/**/*",
@@ -100,15 +108,16 @@ function watchFiles() {
 }
 
 // define complex tasks
-const js = gulp.series(scriptsLint, scripts);
-const build = gulp.series(clean, gulp.parallel(css, images, js));
-const watch = gulp.parallel(watchFiles, browserSync);
+// const js = gulp.series(scriptsLint, scripts);
+// const js = gulp.series(scriptsLint);
+// const build = gulp.series(clean, gulp.parallel(css, images, js));
+// const watch = gulp.parallel(watchFiles, browserSync);
 
 // export tasks
-exports.images = images;
 exports.css = css;
-exports.js = js;
 exports.clean = clean;
-exports.build = build;
-exports.watch = watch;
-exports.default = build;
+// exports.images = images;
+// exports.js = js;
+// exports.build = build;
+// exports.watch = watch;
+// exports.default = build;
