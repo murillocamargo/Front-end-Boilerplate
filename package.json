@@ -28,6 +28,7 @@
     "node-sass": "^4.11.0"
   },
   "dependencies": {
+    "browser-sync": "^2.26.3",
     "del": "^3.0.0"
   }
 }
