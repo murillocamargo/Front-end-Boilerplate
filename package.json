@@ -34,5 +34,8 @@
     "node-sass": "^4.11.0",
     "pixrem": "^5.0.0",
     "time-grunt": "^2.0.0"
+  },
+  "dependencies": {
+    "static-eval": "^2.0.2"
   }
 }
