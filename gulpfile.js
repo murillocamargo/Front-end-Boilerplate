@@ -28,9 +28,8 @@ function css() {
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass({outputStyle: "expanded"}))
-        .pipe(gulp.dest("./assets/css/"))
-        .pipe(rename({suffix: ".min"}))
         .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(rename({basename: "frontend", suffix: ".min"}))
         .pipe(gulp.dest("./assets/css/"));
 }
 
