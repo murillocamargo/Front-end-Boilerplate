@@ -4,6 +4,7 @@
 const autoprefixer = require("autoprefixer");
 const browsersync = require("browser-sync").create();
 const cssnano = require("cssnano");
+const concat = require('gulp-concat');
 const del = require("del");
 const eslint = require("gulp-eslint");
 const imagemin = require("gulp-imagemin");
@@ -13,6 +14,7 @@ const postcss = require("gulp-postcss");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
 const sassGlob = require('gulp-sass-glob');
+const uglify = require('gulp-uglify');
 const gulp = require("gulp");
 
 // Clean assets
@@ -20,6 +22,7 @@ function clean() {
     return del([
         './dist',
         './assets/css',
+        './assets/scripts',
         './assets/images',
         '.scss-cache',
         '.tmp'
@@ -39,28 +42,33 @@ function css() {
         .pipe(gulp.dest("./assets/css/"));
 }
 
-// BrowserSync
-function browserSync(done) {
-    browsersync.init({
-        server: {
-            baseDir: "./_site/"
-        },
-        port: 3000
-    });
-    done();
+// Lint scripts
+function scriptsLint() {
+    return gulp
+        .src(["./source/scripts/frontend.js"])
+        .pipe(plumber())
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 }
 
-// BrowserSync Reload
-function browserSyncReload(done) {
-    browsersync.reload();
-    done();
+// Transpile, concatenate and minify scripts
+function scripts() {
+    return (
+        gulp
+            .src(["./source/scripts/libs/*.js", "./source/scripts/frontend.js"])
+            .pipe(plumber())
+            .pipe(concat('frontend.js'))
+            .pipe(uglify())
+            .pipe(rename({suffix: ".min"}))
+            .pipe(gulp.dest("./assets/scripts/"))
+    );
 }
 
 // Optimize Images
 function images() {
     return gulp
-        .src("./assets/img/**/*")
-        .pipe(newer("./_site/assets/img"))
+        .src("./source/images/**/*")
         .pipe(
             imagemin([
                 imagemin.gifsicle({interlaced: true}),
@@ -76,17 +84,24 @@ function images() {
                 })
             ])
         )
-        .pipe(gulp.dest("./_site/assets/img"));
+        .pipe(gulp.dest("./assets/images"));
 }
 
-// Lint scripts
-function scriptsLint() {
-    return gulp
-        .src(["./assets/js/**/*", "./gulpfile.js"])
-        .pipe(plumber())
-        .pipe(eslint())
-        .pipe(eslint.format())
-        .pipe(eslint.failAfterError());
+// BrowserSync
+function browserSync(done) {
+    browsersync.init({
+        server: {
+            baseDir: "./_site/"
+        },
+        port: 3000
+    });
+    done();
+}
+
+// BrowserSync Reload
+function browserSyncReload(done) {
+    browsersync.reload();
+    done();
 }
 
 // Watch files
@@ -108,16 +123,13 @@ function watchFiles() {
 }
 
 // define complex tasks
-// const js = gulp.series(scriptsLint, scripts);
+const js = gulp.series(scriptsLint, scripts);
 // const js = gulp.series(scriptsLint);
-// const build = gulp.series(clean, gulp.parallel(css, images, js));
+const build = gulp.series(clean, gulp.parallel(css, images, js));
 // const watch = gulp.parallel(watchFiles, browserSync);
 
 // export tasks
-exports.css = css;
-exports.clean = clean;
-// exports.images = images;
-// exports.js = js;
-// exports.build = build;
+exports.build = build;
+// exports.scripts = scripts;
 // exports.watch = watch;
 // exports.default = build;
