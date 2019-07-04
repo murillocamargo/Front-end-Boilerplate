@@ -17,7 +17,13 @@ const gulp = require("gulp");
 
 // Clean assets
 function clean() {
-    return del(["./assets/"]);
+    return del([
+        './dist',
+        './assets/css',
+        './assets/images',
+        '.scss-cache',
+        '.tmp'
+    ]);
 }
 
 // CSS task
@@ -48,11 +54,6 @@ function browserSync(done) {
 function browserSyncReload(done) {
     browsersync.reload();
     done();
-}
-
-// Clean assets
-function clean() {
-    return del(["./_site/assets/"]);
 }
 
 // Optimize Images
