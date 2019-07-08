@@ -2,6 +2,7 @@
 
 // Load plugins
 const autoprefixer = require("autoprefixer");
+const babel = require('gulp-babel');
 const browsersync = require("browser-sync").create();
 const cssnano = require("cssnano");
 const concat = require('gulp-concat');
@@ -53,11 +54,20 @@ function scriptsLint() {
 }
 
 // Transpile, concatenate and minify scripts
+
 function scripts() {
     return (
         gulp
             .src(["./source/scripts/libs/*.js", "./source/scripts/frontend.js"])
             .pipe(plumber())
+            .pipe(babel({
+                presets: [['env', {
+                    loose: true,
+                    modules: false,
+                    exclude: ['transform-es2015-typeof-symbol']
+                }]],
+                plugins: ['@babel/plugin-proposal-object-rest-spread']
+            }))
             .pipe(concat('frontend.js'))
             .pipe(uglify())
             .pipe(rename({suffix: ".min"}))
@@ -91,7 +101,7 @@ function images() {
 function browserSync(done) {
     browsersync.init({
         server: {
-            baseDir: "./_site/"
+            baseDir: "./"
         },
         port: 3000
     });
@@ -106,30 +116,19 @@ function browserSyncReload(done) {
 
 // Watch files
 function watchFiles() {
-    gulp.watch("./assets/scss/**/*", css);
-    // gulp.watch("./assets/js/**/*", gulp.series(scriptsLint, scripts));
-    gulp.watch("./assets/js/**/*", gulp.series(scriptsLint));
-    gulp.watch(
-        [
-            "./_includes/**/*",
-            "./_layouts/**/*",
-            "./_pages/**/*",
-            "./_posts/**/*",
-            "./_projects/**/*"
-        ],
-        gulp.series(browserSyncReload)
-    );
-    gulp.watch("./assets/img/**/*", images);
+    gulp.watch("./source/scss/**/*", gulp.series(css, browserSyncReload));
+    gulp.watch("./source/scripts/**/*", gulp.series(scriptsLint, scripts, browserSyncReload));
+    gulp.watch("./source/images/**/*", gulp.series(images, browserSyncReload));
+    gulp.watch("./**/*.{html,php}", gulp.series(browserSyncReload));
 }
 
 // define complex tasks
 const js = gulp.series(scriptsLint, scripts);
-// const js = gulp.series(scriptsLint);
 const build = gulp.series(clean, gulp.parallel(css, images, js));
-// const watch = gulp.parallel(watchFiles, browserSync);
+const watch = gulp.parallel(watchFiles, browserSync);
 
 // export tasks
 exports.build = build;
-// exports.scripts = scripts;
-// exports.watch = watch;
-// exports.default = build;
+exports.watch = watch;
+exports.scripts = scripts;
+exports.default = gulp.series(build, watch);
