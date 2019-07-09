@@ -12,39 +12,42 @@ Basic structure for front-end development
 - Modernizr v3.6.0
 
 ### Managers
-- Grunt
-- Bower
+- Gulp v4.0.0
 
-#### Grunt plugins
-- Concurrent
-- Clean
-- Concat
-- Copy
-- Cssmin
-- Imagemin
-- SVGmin
-- JShint
-- Sass (grunt-sass with libsass)
-- Sass globbing
-- Uglify
-- Watch
-- Spritesmith
-- Usemin + Wiredep
+#### Gulp & NPM modules
+- autoprefixer
+- cssnano
+- gulp-babel
+- gulp-clean
+- gulp-concat
+- gulp-copy
+- gulp-eslint
+- gulp-imagemin
+- gulp-newer
+- gulp-plumber
+- gulp-postcss
+- gulp-rename
+- gulp-sass
+- gulp-sass-glob
+- gulp-uglify
+- node-sass
+- browser-sync
+- del
 
 ## Usage
 
 1. Install dependencies, packages and initial structure
 
 ```sh
-  $ npm install && bower install
+  $ npm install or yarn install
   ```
 2. Build project
 
 ```sh
-  $ grunt build
+  $ gulp build
   ```
 3. Build && Watch files
 
 ```sh
-  $ grunt
+  $ gulp
   ```
