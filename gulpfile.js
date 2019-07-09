@@ -96,6 +96,18 @@ function images() {
         .pipe(gulp.dest("./assets/images"));
 }
 
+function copyAssets() {
+    return gulp
+        .src("./assets/**/*")
+        .pipe(gulp.dest('dist/assets'));
+}
+
+function copyStructure() {
+    return gulp
+        .src("./*.{html,php}")
+        .pipe(gulp.dest('dist'));
+}
+
 // BrowserSync
 function browserSync(done) {
     browsersync.init({
@@ -123,11 +135,13 @@ function watchFiles() {
 
 // define complex tasks
 const js = gulp.series(scriptsLint, scripts);
-const build = gulp.series(clean, gulp.parallel(css, images, js));
+const assets = gulp.parallel(css, images, js);
+const copy = gulp.parallel(copyAssets, copyStructure);
+
+const build = gulp.series(clean, assets, copy);
 const watch = gulp.parallel(watchFiles, browserSync);
 
 // export tasks
 exports.build = build;
 exports.watch = watch;
-exports.scripts = scripts;
 exports.default = gulp.series(build, watch);
