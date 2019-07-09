@@ -24,9 +24,7 @@ function clean() {
         './dist',
         './assets/css',
         './assets/scripts',
-        './assets/images',
-        '.scss-cache',
-        '.tmp'
+        './assets/images'
     ]);
 }
 
@@ -79,6 +77,7 @@ function scripts() {
 function images() {
     return gulp
         .src("./source/images/**/*")
+        .pipe(newer("./assets/images"))
         .pipe(
             imagemin([
                 imagemin.gifsicle({interlaced: true}),
