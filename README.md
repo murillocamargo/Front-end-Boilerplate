@@ -12,7 +12,7 @@ Basic structure for front-end development
 - Modernizr v3.6.0
 
 ### Managers
-- Gulp v4.0.0
+- Gulp v4.X.X
 
 #### Gulp & NPM modules
 - autoprefixer
