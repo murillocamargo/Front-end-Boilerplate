@@ -2,11 +2,12 @@
 
 // Load plugins
 const autoprefixer = require("autoprefixer");
-const babel = require('gulp-babel');
 const browsersync = require("browser-sync").create();
 const cssnano = require("cssnano");
-const concat = require('gulp-concat');
 const del = require("del");
+
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
 const eslint = require("gulp-eslint");
 const imagemin = require("gulp-imagemin");
 const newer = require("gulp-newer");
@@ -30,12 +31,11 @@ function clean() {
 
 // CSS task
 function css() {
-
     return gulp
         .src("./source/scss/main.scss")
         .pipe(plumber())
         .pipe(sassGlob())
-        .pipe(sass({outputStyle: "expanded"}))
+        .pipe(sass())
         .pipe(postcss([autoprefixer(), cssnano()]))
         .pipe(rename({basename: "frontend", suffix: ".min"}))
         .pipe(gulp.dest("./assets/css/"));
@@ -54,23 +54,21 @@ function scriptsLint() {
 // Transpile, concatenate and minify scripts
 
 function scripts() {
-    return (
-        gulp
-            .src(["./source/scripts/libs/*.js", "./source/scripts/frontend.js"])
-            .pipe(plumber())
-            .pipe(babel({
-                presets: [['env', {
-                    loose: true,
-                    modules: false,
-                    exclude: ['transform-es2015-typeof-symbol']
-                }]],
-                plugins: ['@babel/plugin-proposal-object-rest-spread']
-            }))
-            .pipe(concat('frontend.js'))
-            .pipe(uglify())
-            .pipe(rename({suffix: ".min"}))
-            .pipe(gulp.dest("./assets/scripts/"))
-    );
+    return gulp
+        .src(["./source/scripts/libs/*.js", "./source/scripts/frontend.js"])
+        .pipe(plumber())
+        .pipe(babel({
+            presets: [['env', {
+                loose: true,
+                modules: false,
+                exclude: ['transform-es2015-typeof-symbol']
+            }]],
+            plugins: ['@babel/plugin-proposal-object-rest-spread']
+        }))
+        .pipe(concat('frontend.js'))
+        .pipe(uglify())
+        .pipe(rename({suffix: ".min"}))
+        .pipe(gulp.dest("./assets/scripts/"));
 }
 
 // Optimize Images
