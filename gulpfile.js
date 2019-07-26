@@ -10,6 +10,11 @@ const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const eslint = require("gulp-eslint");
 const imagemin = require("gulp-imagemin");
+const mode = require('gulp-mode')({
+    modes: ["production", "development"],
+    default: "development",
+    verbose: false
+});
 const newer = require("gulp-newer");
 const plumber = require("gulp-plumber");
 const postcss = require("gulp-postcss");
@@ -36,7 +41,7 @@ function css() {
         .pipe(plumber())
         .pipe(sassGlob())
         .pipe(sass())
-        .pipe(postcss([autoprefixer(), cssnano()]))
+        .pipe(mode.production(postcss([autoprefixer(), cssnano()])))
         .pipe(rename({basename: "frontend", suffix: ".min"}))
         .pipe(gulp.dest("./assets/css/"));
 }
@@ -66,7 +71,7 @@ function scripts() {
             plugins: ['@babel/plugin-proposal-object-rest-spread']
         }))
         .pipe(concat('frontend.js'))
-        .pipe(uglify())
+        .pipe(mode.production(uglify()))
         .pipe(rename({suffix: ".min"}))
         .pipe(gulp.dest("./assets/scripts/"));
 }
@@ -77,7 +82,7 @@ function images() {
         .src("./source/images/**/*")
         .pipe(newer("./assets/images"))
         .pipe(
-            imagemin([
+            mode.production(imagemin([
                 imagemin.gifsicle({interlaced: true}),
                 imagemin.jpegtran({progressive: true}),
                 imagemin.optipng({optimizationLevel: 5}),
@@ -89,7 +94,26 @@ function images() {
                         }
                     ]
                 })
-            ])
+            ], {
+                verbose: true
+            }))
+        )
+        .pipe(
+            mode.development(imagemin([
+                imagemin.gifsicle({interlaced: true}),
+                imagemin.jpegtran({progressive: true}),
+                imagemin.optipng({optimizationLevel: 1}),
+                imagemin.svgo({
+                    plugins: [
+                        {
+                            removeViewBox: false,
+                            collapseGroups: true
+                        }
+                    ]
+                })
+            ], {
+                verbose: true
+            }))
         )
         .pipe(gulp.dest("./assets/images"));
 }
