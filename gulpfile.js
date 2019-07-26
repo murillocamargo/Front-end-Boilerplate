@@ -57,7 +57,6 @@ function scriptsLint() {
 }
 
 // Transpile, concatenate and minify scripts
-
 function scripts() {
     return gulp
         .src(["./source/scripts/libs/*.js", "./source/scripts/frontend.js"])
