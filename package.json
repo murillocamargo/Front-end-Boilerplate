@@ -11,9 +11,9 @@
   "license": "MIT",
   "homepage": "https://github.com/murillocamargo/Front-end-Boilerplate",
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.6.0",
     "autoprefixer": "^9.6.1",
     "babel-plugin-transform-es2015-modules-strip": "^0.1.1",
     "babel-preset-env": "^1.7.0",
@@ -22,7 +22,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^6.0.0",
-    "gulp-imagemin": "^6.0.0",
+    "gulp-imagemin": "^6.1.0",
     "gulp-mode": "^1.0.2",
     "gulp-newer": "^1.4.0",
     "gulp-plumber": "^1.2.1",
@@ -35,6 +35,6 @@
   },
   "dependencies": {
     "browser-sync": "^2.26.7",
-    "del": "^5.0.0"
+    "del": "^5.1.0"
   }
 }
