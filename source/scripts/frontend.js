@@ -1,15 +1,15 @@
 (function ($) {
 
-    const app = function () {
+    const app = () => {
         this.body = $('body');
 
         //CREATE FUNCTIONS FOR THE SITE
-        const functionName = function () {
+        const functionName = () => {
             console.log('Worked!');
         };
 
         //THEN ADD THEM TO THE RUN FUNCTION
-        const run = function () {
+        const run = () => {
             functionName();
         };
 
